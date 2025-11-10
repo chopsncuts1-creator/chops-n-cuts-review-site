@@ -1,7 +1,56 @@
-<button onclick="copyAndOpenGoogleReview()">
-  ⭐ Click to review us on Google
-</button>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Google Review Button</title>
+  <style>
+    /* Make the page take full height and remove default margins */
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
 
+    /* Center everything vertically & horizontally */
+    .center-wrapper {
+      display: flex;
+      justify-content: center;  /* horizontal */
+      align-items: center;      /* vertical */
+      height: 100vh;            /* full viewport height */
+    }
+
+    /* Style the button: bigger size, padding, etc. */
+    .review-btn {
+      font-size: 1.2rem;        /* bigger text */
+      padding: 1rem 2.5rem;     /* bigger clickable area */
+      border-radius: 999px;     /* pill shape */
+      border: none;
+      cursor: pointer;
+      background: #1a73e8;      /* Google-ish blue */
+      color: white;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
+    }
+
+    .review-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+      background: #1557b0;
+    }
+
+    .review-btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+    }
+  </style>
+</head>
+<body>
+  <div class="center-wrapper">
+    <button class="review-btn" onclick="copyAndOpenGoogleReview()">
+      ⭐ Click to review us on Google
+    </button>
+  </div>
+  
 <script>
   // 1️⃣ Array of sample review texts
   const reviewTexts = [
@@ -95,3 +144,6 @@
     });
   }
 </script>
+
+</body>
+</html>

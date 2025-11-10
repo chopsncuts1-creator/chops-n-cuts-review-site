@@ -1,0 +1,20 @@
+<button onclick="copyAndOpenGoogleReview()">
+  ⭐ Click to review us on Google
+</button>
+
+<script>
+  function copyAndOpenGoogleReview() {
+    const reviewText = "Fresh meat, clean shop and very friendly service at Chops N Cuts. Highly recommend!";
+
+    // Copy suggested text to clipboard
+    navigator.clipboard.writeText(reviewText).then(() => {
+      // Open your Google Maps shop link
+      window.open("https://maps.app.goo.gl/F646vwfLZsQm1D4t5", "_blank", "noopener");
+
+      alert("Sample review text copied! When Google opens, just paste it into the review box.");
+    }).catch(err => {
+      console.error("Clipboard copy failed", err);
+      window.open("https://maps.app.goo.gl/F646vwfLZsQm1D4t5", "_blank", "noopener");
+    });
+  }
+</script>

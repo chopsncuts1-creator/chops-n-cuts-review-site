@@ -3,18 +3,35 @@
 </button>
 
 <script>
+  // 1️⃣ Array of sample review texts
+  const reviewTexts = [
+    "Fresh meat, clean shop and very friendly service at Chops N Cuts. Highly recommend!",
+    "Great quality and reasonable prices at Chops N Cuts. Staff is always polite and helpful.",
+    "Very hygienic shop, fresh cuts every time. Chops N Cuts never disappoints.",
+    "Loved the service at Chops N Cuts. Fresh, clean and well-packed meat.",
+    "Consistent quality, on-time delivery and good behaviour from staff at Chops N Cuts."
+  ];
+
+  // 2️⃣ Helper: pick a random review text
+  function getRandomReviewText() {
+    if (!reviewTexts.length) return "";
+    const index = Math.floor(Math.random() * reviewTexts.length);
+    return reviewTexts[index];
+  }
+
+  // 3️⃣ Main function: copy + open Google review page
   function copyAndOpenGoogleReview() {
-    const reviewText = "Fresh meat, clean shop and very friendly service at Chops N Cuts. Highly recommend!";
+    const reviewText = getRandomReviewText();
 
     // Copy suggested text to clipboard
     navigator.clipboard.writeText(reviewText).then(() => {
       // Open your Google Maps shop link
-      window.open("https://maps.app.goo.gl/F646vwfLZsQm1D4t5", "_blank", "noopener");
+      window.open("https://search.google.com/local/writereview?placeid=ChIJFc-cDAAVrjsRWf2MY5vc0yQ", "_blank", "noopener");
 
       alert("Sample review text copied! When Google opens, just paste it into the review box.");
     }).catch(err => {
       console.error("Clipboard copy failed", err);
-      window.open("https://maps.app.goo.gl/F646vwfLZsQm1D4t5", "_blank", "noopener");
+      window.open("https://search.google.com/local/writereview?placeid=ChIJFc-cDAAVrjsRWf2MY5vc0yQ", "_blank", "noopener");
     });
   }
 </script>

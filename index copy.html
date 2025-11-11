@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Google Review Button</title>
+  <style>
+    /* Make the page take full height and remove default margins */
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    /* Center everything vertically & horizontally */
+    .center-wrapper {
+      display: flex;
+      justify-content: center;  /* horizontal */
+      align-items: center;      /* vertical */
+      height: 100vh;            /* full viewport height */
+    }
+
+    /* Style the button: bigger size, padding, etc. */
+    .review-btn {
+      font-size: 2rem;        /* bigger text */
+      padding: 1.5rem 3.25rem;     /* bigger clickable area */
+      border-radius: 999px;     /* pill shape */
+      border: none;
+      cursor: pointer;
+      background: #1a73e8;      /* Google-ish blue */
+      color: white;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
+    }
+
+    .review-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+      background: #1557b0;
+    }
+
+    .review-btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+    }
+  </style>
+</head>
+<body>
+  <div class="center-wrapper">
+    <button class="review-btn" onclick="copyAndOpenGoogleReview()">
+      ⭐ Click to review us on Google
+    </button>
+  </div>
+  
+<script>
+  // 1️⃣ Array of sample review texts
+  const reviewTexts = [
+    // English reviews
+    "Absolutely love Chops N Cuts! Fresh fish, super tender chicken and clean mutton every single time.",
+    "Best meat shop in the area. Everything is neatly packed and cut just the way I ask.",
+    "Fish is always fresh and has no bad smell. You can really tell they clean it properly.",
+    "Their chicken is so soft and juicy after cooking. Perfect cuts and very hygienic.",
+    "I like how they cut to my preference without any complaints. Great service and quality.",
+    "Fresh stock daily is not just a claim here, you can actually taste the difference!",
+    "I always buy fish from Chops N Cuts now. Super clean, no scales, no mess, ready to cook.",
+    "Very professional shop. They pack everything nicely and the prices are also reasonable.",
+    "The mutton quality is top notch. Cooks fast and turns out really soft.",
+    "If you care about cleanliness and hygiene, this is the place to buy your meat.",
+    "Staff is friendly, they suggest the best cuts for curry, fry, or biryani. Really helpful.",
+    "Love that I can ask for thin, medium or chunky cuts and they do it perfectly every time.",
+    "No watery chicken, no old stock. Everything feels fresh and premium at budget prices.",
+    "I’ve stopped going to other meat shops. Chops N Cuts is consistent with quality and service.",
+    "Very clean shop, no bad smell, they handle everything with gloves and keep it hygienic.",
+    "Their neatly packed parcels make it so easy to just come home and start cooking.",
+    "Fish fry, curries, biryani – whatever I make, the taste is amazing because of their fresh meat.",
+    "Affordable prices for such good quality. Totally value for money.",
+    "Timely service, clean cuts, fresh stock – honestly the best non-veg shop around.",
+    "Highly recommend Chops N Cuts if you want fresh, clean and well-cut fish, chicken and mutton.",
+    "Chops N Cuts se hammesha fresh fish aur tender chicken leta hoon, bilkul mast quality hai 👌",
+
+    // Hindi reviews
+    "Yaha ka mutton bohot soft aur clean hota hai, cooking me maza aa jata hai 😋",
+    "Roz ka fresh stock milta hai, bilkul bhi purana ya bad smell wala meat nahi hota.",
+    "Shop bohot clean hai, sab kuch hygienically clean karke neatly pack kar ke dete hain.",
+    "Mujhe apne hisaab se cut chahiye hota hai, woh log patiently sunke perfect cut karke dete hain.",
+    "Price bhi reasonable hai aur quality top notch, full paisa vasool jagah hai.",
+    "Professional staff hai, ache se deal karte hain, attitude bhi bohot acha hai.",
+    "Fish bilkul ready-to-cook de dete hain, scales aur extra cheeze sab clean karke. Time bhi bach jata hai.",
+    "Chicken bohot hi tender milta hai, marinate karo toh turant absorb ho jata hai, taste bhi zabardast.",
+    "Packing bohot neat hoti hai, leak wagaira ka koi issue nahi, seedha fridge me rakh sakte ho.",
+    "Main ab sirf Chops N Cuts se hi meat leta hoon, ek baar try karoge toh habit ban jayegi.",
+    "Hygiene ka bohot dhyan rakhte hain, gloves pehen ke kaam karte hain, shop me smell bhi nahi aata.",
+    "Staff suggest bhi kar deta hai kaunsa cut curry ke liye best hai aur kaunsa fry ke liye, kaafi helpful log hain.",
+    "Fresh stock daily aata hai isliye taste me clearly farq dikhta hai, ghar wale bhi khush hai.",
+    "Rates market ke hisaab se kaafi sahi hai, itni clean aur fresh quality ke liye bilkul worth hai.",
+    "Mutton gravy aur biryani dono me bohot soft aur juicy banta hai, quality dekh ke clearly pata chalta hai.",
+    "Line ho toh bhi service fast hai, professional tareeke se handle karte hain sab customers ko.",
+    "Unse custom cut mangwana bohot easy hai, bolo medium pieces ya small, sab perfect size me milta hai.",
+    "Chops N Cuts ekdum tension-free shop hai, fresh, clean, hygienic aur affordable – sab ek hi jagah.",
+    "Doston ko bhi recommend kar diya hai, sabka feedback positive aaya, truly best shop for fish, chicken & mutton.",
+
+    // Hind-English GenZ Emojies
+    "Chops N Cuts legit OP hai 🔥 fresh fish, tender chicken, sab kuch on point 😍💯",
+    "Yaha ka meat scene full clean & hygiene hai bro 🧼🐔 fish bhi ekdum fresh lagti hai 😋✨",
+    "Daily fresh stock ka maza hi alag hai 😮‍💨💥 Chops N Cuts pe eyes closed trust kar sakte ho ✅",
+    "Unke cuts literally chef-level hote hain 🔪😎 bolo curry cut ya biryani cut, sab perfect milta hai 🍛",
+    "Price itna reasonable aur quality itni top 🥹💸 full paisa vasool vibes from Chops N Cuts 💯",
+    "Fish bilkul ready-to-cook de dete hain 🐟 no extra cleaning, bas ghar jao aur fry karo 😌🍳",
+    "Staff bohot professional + friendly hai 🤝💼 vibe bhi positive rehti hai shop pe 🌟",
+    "Chicken itna tender milta hai ki cook karte hi melt ho jata hai 🤤🐔 masala bhi nicely absorb ho jata hai 😍",
+    "Packaging dekh ke hi khush ho jata hoon 📦✨ clean, neat, no mess, fridge-ready vibes 😁",
+    "Ye log hygiene ko next level pe le gaye hain 🧴🧤 gloves, clean counter, no bad smell at all 👃❌",
+    "Lowkey best non-veg shop in the area ngl 😌🔥 once try karlo, phir kahin aur jaane ka mann nahi karega 🚫",
+    "Unse customised cut mangwana bohot easy hai 😎 \"bhai thoda chhota cut chahiye\" bolo, turant set kar dete hain ✅",
+    "Mutton lover ho toh yaha ka mutton zaroor try karo 🐐💥 soft, juicy, full flavour – biryani next level ban jaati hai 🤯",
+    "Fresh stock daily ka claim bilkul real hai 🤌 taste se samajh aa jata hai ki quality fake nahi hai 🎯",
+    "Budget friendly + premium quality = Chops N Cuts combo 😍💸 middle-class friendly but luxury vibe wali shop 😁",
+    "Shop ka ambience bhi kaafi clean & sorted hai 🧽 no chaos, sab systematic lagta hai 🧠✅",
+    "Delivery/packing ka scene bhi strong hai 📦🚗 ghar aa ke directly cook kar sakte ho, zero tension 🙌",
+    "Unke professional workers literally know their job 💼🔪 suggestions bhi dete hain kya dish ke liye kaunsa cut best rahega 🍲",
+    "Family ko bhi yahi se meat pasand aa gaya hai 👨‍👩‍👧‍👦❤️ har weekend ka non-veg plan Chops N Cuts se hi start hota hai 😋",
+    "Highly recommend Chops N Cuts 💯🔥 fresh, clean, hygienic, tasty – pura non-veg experience upgrade ho gaya mera 😎🍗"
+  ];
+
+  // 2️⃣ Helper: pick a random review text
+  function getRandomReviewText() {
+    if (!reviewTexts.length) return "";
+    const index = Math.floor(Math.random() * reviewTexts.length);
+    return reviewTexts[index];
+  }
+
+  // 3️⃣ Main function: copy + open Google review page
+  function copyAndOpenGoogleReview() {
+    const reviewText = getRandomReviewText();
+
+    // Copy suggested text to clipboard
+    navigator.clipboard.writeText(reviewText).then(() => {
+      // Open your Google Maps shop link
+      window.open("https://search.google.com/local/writereview?placeid=ChIJFc-cDAAVrjsRWf2MY5vc0yQ", "_blank", "noopener");
+
+      alert("Sample review text copied! When Google opens, just paste it into the review box.");
+    }).catch(err => {
+      console.error("Clipboard copy failed", err);
+      window.open("https://search.google.com/local/writereview?placeid=ChIJFc-cDAAVrjsRWf2MY5vc0yQ", "_blank", "noopener");
+    });
+  }
+</script>
+
+</body>
+</html>
